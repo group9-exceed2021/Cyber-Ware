@@ -1,4 +1,4 @@
-# TheREAL_cyber_ware
+# Cyber-Ware
 
 Cyber ware project for Exceed camp2021
 
