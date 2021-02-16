@@ -16,9 +16,11 @@ myTemp = mongo.db.temp
 myUser = mongo.db.user
 mySn = mongo.db.serial_number
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/login')
 def login():
@@ -30,22 +32,22 @@ def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    flit = {'email' : email}
+    flit = {'email': email}
     data = myUser.find_one(flit)
     if not data:
         flash('Please check your login details and try again.')
         return redirect(url_for('login'))
-    if not check_password_hash(data["password"],password):
+    if not check_password_hash(data["password"], password):
         flash("Wrong password!!!!!!")
         return redirect(url_for('login'))
     sn = data["sn"]
     return redirect(url_for("info", sn=sn))
-    
+
 
 @app.route('/info')
 def info():
     sn = request.args.get('sn')
-    flit = {'sn' : sn}
+    flit = {'sn': sn}
     data = myUser.find_one(flit)
     data_temp = myTemp.find_one(flit)
     return render_template('info.html', sn=sn, data=data, data_temp=data_temp)
@@ -84,13 +86,13 @@ def convert_avg():
     daily = myTemp.find_one({'sn': sn})
     d = datetime.datetime.now().day
     m = datetime.datetime.now().month
-    tim = str(d)+"-"+str(m)
+    tim = str(d) + "-" + str(m)
 
     for ele in daily['daily_temp']:
         all_temp += ele['temp']
         all_hr += 1
 
-    avg = 0 if all_hr==0 else all_temp/all_hr
+    avg = 0 if all_hr == 0 else all_temp / all_hr
     daily['daily_avg'].append({"temp_avg": avg, "day_month": tim})
     daily['daily_temp'] = []
     myTemp.replace_one(
@@ -127,7 +129,7 @@ def signup_post():
     job = request.form.get('job')
 
     dataSN = mySn.find_one({'sn': sn})
-    
+
     if not dataSN:
         flash('This serial number is not exist!')
         return redirect(url_for('signup'))
@@ -135,7 +137,7 @@ def signup_post():
         flash('This serial number is already signed up!')
         return redirect(url_for('login'))
 
-    dataEmail = myUser.find_one({'email' : email})
+    dataEmail = myUser.find_one({'email': email})
 
     if dataEmail:
         flash('This email is already signed up!')
@@ -154,12 +156,14 @@ def signup_post():
 
     return redirect(url_for('login'))
 
+
 @app.route('/get_temp', methods=['GET'])
 def get_temp():
     data = request.json
     sn = data['sn']
     temp = myTemp.find_one({'sn': sn})
     return temp
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='3000', debug=True)
