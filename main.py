@@ -90,7 +90,7 @@ def new_temp():
     return {"result": "add new temp done"}
 
 
-@app.route('/convert_avg', methods=["POST"])
+@app.route('/convert_avg', methods=["PUT"])
 def convert_avg():
     data = request.json
     sn = data['sn']
@@ -107,6 +107,8 @@ def convert_avg():
         all_hr += 1
 
     avg = 0 if all_hr==0 else all_temp/all_hr
+    if len(daily['daily_avg']) == 14:
+        daily['daily_avg'].pop(0)
     daily['daily_avg'].append({"temp_avg": avg, "day_month": tim})
     daily['daily_temp'] = []
     myTemp.replace_one(
