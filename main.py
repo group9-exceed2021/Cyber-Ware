@@ -33,22 +33,38 @@ def login_post():
     flit = {'email' : email}
     data = myUser.find_one(flit)
     if not data:
-        flash('Please check your login details and try again.')
-        return redirect(url_for('login'))
+        # flash('Please check your login details and try again.')
+        # return redirect(url_for('login'))
+        return {"result" : "check your login details and try again"}
     if not check_password_hash(data["password"],password):
-        flash("Wrong password!!!!!!")
-        return redirect(url_for('login'))
-    sn = data["sn"]
-    return redirect(url_for("info", sn=sn))
+        # flash("Wrong password!!!!!!")
+        # return redirect(url_for('login'))
+        return {"result" : "Wrong password"}
+    # sn = data["sn"]
+    # return redirect(url_for("info", sn=sn))
+    return {"result" : "login sucessfully"}
     
 
-@app.route('/info')
-def info():
+# @app.route('/info')
+# def info():
+#     sn = request.args.get('sn')
+#     flit = {'sn' : sn}
+#     data = myUser.find_one(flit)
+#     data_temp = myTemp.find_one(flit)
+#     return render_template('info.html', sn=sn, data=data, data_temp=data_temp)
+
+@app.route('/get_info',methods = ["GET"])
+def get_info():
     sn = request.args.get('sn')
     flit = {'sn' : sn}
     data = myUser.find_one(flit)
     data_temp = myTemp.find_one(flit)
-    return render_template('info.html', sn=sn, data=data, data_temp=data_temp)
+    # return render_template('info.html', sn=sn, data=data, data_temp=data_temp)
+    return {
+        "sn" : sn,
+        "info" : data,
+        "temp" : data_temp
+    }
 
 
 @app.route('/graph')
