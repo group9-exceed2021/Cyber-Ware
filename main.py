@@ -16,13 +16,15 @@ myTemp = mongo.db.temp
 myUser = mongo.db.user
 mySn = mongo.db.serial_number
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# render is not allowed
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+# render is not allowed
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
 
 
 @app.route('/login_post', methods=['POST'])
@@ -66,10 +68,10 @@ def get_info():
         "temp" : data_temp
     }
 
-
-@app.route('/graph')
-def graph():
-    return render_template('graph.html', name='nameeee')
+# render is not allowed
+# @app.route('/graph')
+# def graph():
+#     return render_template('graph.html', name='nameeee')
 
 
 @app.route('/new_temp', methods=['POST'])
@@ -129,10 +131,10 @@ def test():
     myUser.insert_one(data)
     return {"data": "done add test"}
 
-
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
+# render is not allowed
+# @app.route('/signup')
+# def signup():
+#     return render_template('signup.html')
 
 
 @app.route('/signup_post', methods=['POST'])
