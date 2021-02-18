@@ -16,7 +16,7 @@ load_dotenv(dotenv_path)
 app = Flask(__name__)
 app.config['MONGO_URI'] = environ.get("MONGO_URL")
 app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
 mongo = PyMongo(app)
 myTemp = mongo.db.temp
 myUser = mongo.db.user
