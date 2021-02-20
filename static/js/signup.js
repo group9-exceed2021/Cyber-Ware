@@ -1,9 +1,16 @@
+/**
+ * @param {any} inputElement The input element that need to set as error.
+ * @param {string} message Text about error information.
+ */
 function setInputError(inputElement, message) {
     console.log('inputElement:', inputElement);
     inputElement.classList.add("form__input--error");
     inputElement.parentElement.querySelector(".form__input-error-message").textContent = message;
 }
 
+/**
+ * @param {Element} inputElement The input element that need to clear error.
+ */
 function clearInputError(inputElement) {
     inputElement.classList.remove("form__input--error");
     inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
