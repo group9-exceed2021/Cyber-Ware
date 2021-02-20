@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Covid situation</title>
+<title>Covid situation in Thailand</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -20,106 +20,104 @@
 
 <body class="w3-light-grey">
 
-<div class="w3-bar w3-top w3-green w3-large" style="z-index:4">
-    <a href="../templates/login.html"><span class="w3-bar-item w3-right">Login</span></a>
-    <a href="../templates/signup.html"><span class="w3-bar-item w3-right">Register</span></a>
-</div>
-
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-top:43px;">
-
-    <!-- Header -->
-    <header class="w3-container" style="padding-top:22px">
-        <h5><b><i class="fa fa-dashboard"></i> Covid situation </b></h5>
-    </header>
-
-    <div class="w3-row-padding w3-margin-bottom">
-        <div class="w3-quarter">
-            <div class="w3-container w3-red w3-padding-16">
-                <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-                <div class="w3-right">
-                    <h3 id="Confirmed Value"></h3>
-                </div>
-                <div class="w3-clear"></div>
-                <h4>Confirmed</h4>
-            </div>
-        </div>
-        <div class="w3-quarter">
-            <div class="w3-container w3-blue w3-padding-16">
-                <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
-                <div class="w3-right">
-                    <h3 id="Recovered Value"></h3>
-                </div>
-                <div class="w3-clear"></div>
-                <h4>Recovered</h4>
-            </div>
-        </div>
-        <div class="w3-quarter">
-            <div class="w3-container w3-teal w3-padding-16">
-                <div class="w3-left"><i class="fa fa-bed w3-xxxlarge"></i></div>
-                <div class="w3-right">
-                    <h3 id="Hospitalized Value"></h3>
-                </div>
-                <div class="w3-clear"></div>
-                <h4>Hospitalized</h4>
-            </div>
-        </div>
-        <div class="w3-quarter">
-            <div class="w3-container w3-orange w3-text-white w3-padding-16">
-                <div class="w3-left"><i class="fa fa-user-times w3-xxxlarge"></i></div>
-                <div class="w3-right">
-                    <h3 id="Deaths Value"></h3>
-                </div>
-                <div class="w3-clear"></div>
-                <h4>Death</h4>
-            </div>
-        </div>
+    <div class="w3-bar w3-top w3-green w3-large" style="z-index:4">
+        <a href="../templates/login.html"><span class="w3-bar-item w3-right">Login</span></a>
+        <a href="../templates/signup.html"><span class="w3-bar-item w3-right">Register</span></a>
     </div>
 
-    <div class="w3-panel">
-        <div class="w3-row-padding" style="margin:0 -16px">
-            <div class="w3-twothird">
-                <h5>Feeds</h5>
-                <table class="w3-table w3-striped w3-white">
-                    <tr>
-                        <td><i class="fa fa-users w3-text-red w3-large"></i></td>
-                        <td>New Confirmed</td>
-                        <td id="New Confirmed Value"><i> </i></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-eye w3-text-blue w3-large"></i></td>
-                        <td>New Recoverd</td>
-                        <td id="New Recovered Value"><i> </i></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-bed w3-text-green w3-large"></i></td>
-                        <td>New Hospitalized</td>
-                        <td id="New Hospitalized Value"><i> </i></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-user-times w3-text-orange w3-large"></i></td>
-                        <td>New Deaths</td>
-                        <td id="New Deaths Value"><i> </i></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-calendar w3-text-black w3-large"></i></td>
-                        <td>Update Date</td>
-                        <td id="Update Date Value"><i> </i></td>
-                    </tr>
-                </table>
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-top:43px;">
+
+        <!-- Header -->
+        <header class="w3-container" style="padding-top:22px">
+            <h5><b><i class="fa fa-dashboard"></i> Covid situation in Thailand </b></h5>
+        </header>
+
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter">
+                <div class="w3-container w3-red w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3 id="Confirmed Value"></h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4 >Confirmed</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-blue w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3 id="Recovered Value"></h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Recovered</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-teal w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-bed w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3 id="Hospitalized Value"></h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Hospitalized</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-user-times w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3 id="Deaths Value"></h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Death</h4>
+                </div>
             </div>
         </div>
-        <footer class="w3-container w3-padding-16 w3-light-grey">
-            <h4>CYBER WARE</h4>
-            <p>Info Source by: <a href="https://covid19.th-stat.com/" target="_blank"></a>covid19.th-stat</p>
-            <p>Info dev by: <a href="https://kidkarnmai.com/" target="_blank"></a>kidkarnmai</p>
-            <p>Info server by: <a href="https://smilehost.asia/" target="_blank"></a>smilehost</p>
-        </footer>
 
-        <!-- End page content -->
-    </div>
+        <div class="w3-panel">
+            <div class="w3-row-padding" style="margin:0 -16px">
+                <div class="w3-third">
+                    <h5>Feeds</h5>
+                    <table class="w3-table w3-striped w3-white">
+                        <tr>
+                            <td><i class="fa fa-users w3-text-red w3-large"></i></td>
+                            <td>New Confirmed</td>
+                            <td id="New Confirmed Value"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-eye w3-text-blue w3-large"></i></td>
+                            <td>New Recoverd</td>
+                            <td  id="New Recovered Value"><i> </i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-bed w3-text-green w3-large"></i></td>
+                            <td>New Hospitalized</td>
+                            <td id="New Hospitalized Value"><i> </i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-user-times w3-text-orange w3-large"></i></td>
+                            <td>New Deaths</td>
+                            <td id="New Deaths Value"><i> </i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-calendar w3-text-black w3-large"></i></td>
+                            <td>Update Date</td>
+                            <td id="Update Date Value"><i> </i></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <footer class="w3-container w3-padding-16 w3-light-grey">
+                <h4>CYBER WARE</h4>
+                <p>Info Source by: <a href="https://covid19.th-stat.com/" target="_blank"></a>covid19.th-stat</p>
+            </footer>
 
-    <script src="../static/js/covid.js"></script>
+            <!-- End page content -->
+        </div>
+
+        <script src="../static/js/covid.js"></script>
 
 </body>
 
