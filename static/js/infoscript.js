@@ -13,7 +13,7 @@ function get_info() {
         fetch("http://158.108.182.10:3000/get_info?email=a2@gmail.com", requestOptions)
             .then(response => response.json())
             .then(json => {
-
+                console.log(json)
                 Temperature = json.show_temp
                 document.getElementById("Temperature").innerHTML = Temperature
 
@@ -27,15 +27,17 @@ function get_info() {
                 document.getElementById("Firstname").innerHTML = Firstname
                 document.getElementById("Firstname2").innerHTML = Firstname
                 d = json.daily_temp
+                d2 = json.avg
 
-                //console.log(d)
+                console.log(d)
+                console.log(d2)
                 // document.getElementsByTagName("h3")
                 // var all = document.getElement
                 Job = json.job
                 document.getElementById("Job").innerHTML = Job
                 Surname = json.surname
                 document.getElementById("Surname").innerHTML = Surname
-                console.log(d)
+                //console.log(d)
 
                 console.log(123)
                 let tmp = [];
@@ -44,6 +46,15 @@ function get_info() {
                     tmp.push({
                         x: new Date(d[i]["year"], d[i]["month"], d[i]["day"], d[i]["hour"], d[i]["minute"], d[i]["sec"]),
                         y: d[i]["temp"]
+                    })
+                }
+
+                let tmp2 = [];
+                for (let j= 0; j < d2.length; j++) {
+                    console.log(j)
+                    tmp2.push ({
+                        x: new Date(d2[j]["year"], d2[j]["month"], d2[j]["day"]), 
+                        y: d2[j]["temp_avg"]
                     })
                 }
 
@@ -71,7 +82,34 @@ function get_info() {
                             }
                         ]
                     });
+                    let chart2 = new CanvasJS.Chart("chartContainer2",
+                    {
+                        title: {
+                            text: "Daily Average Temperature"
+                        },
+
+                        axisX: {
+                            title: "Date",
+                            gridThickness: 2,
+                            interval: 2,
+                            intervalType: "day",
+                            valueFormatString: "hh TT K",
+                            labelAngle: -20
+                        },
+                        axisY: {
+                            title: "Average Temperature"
+                        },
+                        data: [
+                            {
+                                type: "line",
+                                dataPoints: tmp2
+                            }
+                        ]
+                    });
+
+
                 chart1.render();
+                chart2.render();
             })
 
             .catch(error => console.log('error', error));
