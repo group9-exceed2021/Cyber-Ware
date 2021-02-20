@@ -14,11 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setFormMessage(loginForm, "error", "Invalid username/password combination.");
     });
+
+    let submitLogin = document.getElementById('submitLogin')
+    let url = new URL('https://')
+    let params = new URLSearchParams(url.search.slice(1))
+
+    submitLogin.onclick = function (click) {
+        params.append("email", "email from form")
+    }
+
+
 })
-
-let submitLogin = document.getElementById('submitLogin')
-let url = new URL('https://')
-
-submitLogin.onclick = function (click) {
-    URLSearchParams.
-}

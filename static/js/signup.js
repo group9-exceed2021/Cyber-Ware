@@ -18,7 +18,23 @@ function clearInputError(inputElement) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const accountInfo = document.querySelector("#accountInfo")
+    const moreInfo = document.querySelector("#moreInfo")
+
     document.querySelectorAll(".form__input").forEach(inputElement => {
+
+         document.querySelector("#nextToMoreInfo").addEventListener("click", e => {
+        e.preventDefault();
+        accountInfo.classList.add("form--hidden");
+        moreInfo.classList.remove("form--hidden");
+    });
+
+    document.querySelector("#backToSignup").addEventListener("click", e => {
+        e.preventDefault();
+        accountInfo.classList.remove("form--hidden");
+        moreInfo.classList.add("form--hidden");
+    });
+
         inputElement.addEventListener("blur", evt => {
             if (evt.target.id === "username" && evt.target.value.length > 0 && evt.target.value.length < 10) {
                 console.log('inputElement', inputElement);

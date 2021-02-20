@@ -26,6 +26,7 @@ async function get_th() {
         })
         .catch(error => console.log('error', error));
 }
+
 var requestOptions = {
     method: 'GET',
     redirect: 'follow'
