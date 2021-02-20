@@ -1,13 +1,16 @@
 import re
-from flask import Flask, request
+from flask import Flask, request,jsonify
 from flask_pymongo import PyMongo
+from flask_cors import CORS, cross_origin
+import requests
+import urllib, json
 from os import path, environ
 from os.path import join, dirname
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 
-import datetime
+import datetime, pytz
 import math
 
 dotenv_path = join(dirname(__file__), '.env')
@@ -21,19 +24,17 @@ mongo = PyMongo(app)
 myTemp = mongo.db.temp
 myUser = mongo.db.user
 mySn = mongo.db.serial_number
+cors = CORS(app, resources={r"/": {"origins": "*"}})
 
 # render is not allowed
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
-
-# render is not allowed
-# @app.route('/login')
-# def login():
-#     return render_template('login.html')
+@app.route('/')
+@cross_origin()
+def index():
+    return {"notthing": "not"}
 
 
 @app.route('/login_post', methods=['POST'])
+@cross_origin()
 def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
@@ -41,67 +42,25 @@ def login_post():
     flit = {'email' : email}
     data = myUser.find_one(flit)
     if not data:
-        # flash('Please check your login details and try again.')
-        # return redirect(url_for('login'))
         return {"result" : "check your login details and try again"}
     if not check_password_hash(data["password"],password):
-        # flash("Wrong password!!!!!!")
-        # return redirect(url_for('login'))
         return {"result" : "Wrong password"}
-    # sn = data["sn"]
-    # return redirect(url_for("info", sn=sn))
     return {"result" : "login sucessfully"}
-    
-
-# @app.route('/info')
-# def info():
-#     sn = request.args.get('sn')
-#     flit = {'sn' : sn}
-#     data = myUser.find_one(flit)
-#     data_temp = myTemp.find_one(flit)
-#     return render_template('info.html', sn=sn, data=data, data_temp=data_temp)
 
 @app.route('/get_info',methods = ["GET"])
+@cross_origin()
 def get_info():
     sn = request.args.get('sn')
     flit = {'sn' : sn}
     data = myUser.find_one(flit)
     data_temp = myTemp.find_one(flit)
-    # return render_template('info.html', sn=sn, data=data, data_temp=data_temp)
     return {
         "sn" : sn,
         "info" : data,
         "temp" : data_temp
     }
 
-# render is not allowed
-# @app.route('/graph')
-# def graph():
-#     return render_template('graph.html', name='nameeee')
-
-
-@app.route('/new_temp', methods=['POST'])
-def new_temp():
-    data2 = request.json
-    sn = data2['sn']
-    temp = data2['temp']
-
-    h = datetime.datetime.now().hour
-
-    data = myTemp.find_one({'sn': sn})
-
-    data['daily_temp'].append({"temp": temp, "hour": h})
-    myTemp.replace_one(
-        myTemp.find_one({'sn': sn}),
-        data
-    )
-    return {"result": "add new temp done"}
-
-
-@app.route('/convert_avg', methods=["PUT"])
-def convert_avg():
-    data = request.json
-    sn = data['sn']
+def convert_avg(sn):
     all_temp = 0
     all_hr = 0
 
@@ -123,10 +82,37 @@ def convert_avg():
         myTemp.find_one({'sn': sn}),
         daily
     )
-    return {"all_temp": all_temp, "all_hr": all_hr, "avg": avg}
+    # return {"result": "Successful"}
+
+
+@app.route('/new_temp', methods=['POST'])
+@cross_origin()
+def new_temp():
+    data2 = request.json
+    sn = data2['sn']
+    temp = data2['temp']
+    
+    tz = pytz.timezone('Asia/Bangkok')
+
+    m = datetime.datetime.now(tz).month
+    d = datetime.datetime.now(tz).day
+    h = datetime.datetime.now(tz).hour
+
+    data = myTemp.find_one({'sn': sn})
+    thelast = data['daily_temp'][len(data['daily_temp'])-1]
+    if thelast['day'] != d:
+        convert_avg(sn)
+
+    data['daily_temp'].append({"temp": temp, "month" : m, "day": d, "hour": h})
+    myTemp.replace_one(
+        myTemp.find_one({'sn': sn}),
+        data
+    )
+    return {"result": "add new temp done"}
 
 
 @app.route('/test', methods=['GET'])
+@cross_origin()
 def test():
     data = {
         "sn": "sample sn",
@@ -144,6 +130,7 @@ def test():
 
 
 @app.route('/signup_post', methods=['POST'])
+@cross_origin()
 def signup_post():
     sn = request.form.get('sn')
     email = request.form.get('email')
@@ -181,11 +168,23 @@ def signup_post():
     return redirect(url_for('login'))
 
 @app.route('/get_temp', methods=['GET'])
+@cross_origin()
 def get_temp():
     data = request.json
     sn = data['sn']
     temp = myTemp.find_one({'sn': sn})
     return temp
+
+@app.route('/get_th_stat', methods=['GET'])
+@cross_origin()
+def get_th_stat():
+    uri = "https://covid19.th-stat.com/api/open/today"
+    try:
+        uResponse = requests.get(uri)
+    except requests.ConnectionError:
+       return "Connection Error"  
+    Jresponse = uResponse.json()
+    return Jresponse
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='3000', debug=True)
