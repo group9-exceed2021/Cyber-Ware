@@ -1,71 +1,76 @@
-*{
+* {
     margin: 20;
     padding: 20;
 
 
-.page{
+.page {
     height: 100%;
     width: 100%;
     background-color: black;
     position: absolute;
 }
 
-.box-data{
+.box-data {
     width: 380px;
     height: 480px;
     position: relative;
     margin: 6% auto;
     background: #fff;
     padding: 5px;
-    overflow : hidden;
+    overflow: hidden;
 }
 
-#Info{
+#Info {
     height: 10%;
     text-align: center;
-    color:#2c92e6; 
+    color: #2c92e6;
 }
 
-.form-info{
+.form-info {
     width: 80%;
     height: 80%;
     position: relative;
     margin: 10% auto;
     background: #fff;
     padding: 5px;
-    overflow : hidden;
+    overflow: hidden;
 }
 
-#Firstname{
-
-}
-#Lastname{
+#Firstname {
 
 }
 
-#PhoneNo{
+#Lastname {
 
 }
-#Temperature{
+
+#PhoneNo {
 
 }
-#SerialNum{
+
+#Temperature {
 
 }
-#User{
+
+#SerialNum {
+
+}
+
+#User {
     font-size: medium;
     position: fixed;
     text-align: end;
 }
 
-.button{
+.button {
     width: 250px;
     margin: 35px auto;
     position: relative;
     box-shadow: 0 0 20px 9px #ff61241f;
     border-radius: 30px;
 }
-.toggle-btn{
+
+.toggle-btn {
     padding: 10px 30px;
     cursor: pointer;
     background: transparent;
@@ -73,13 +78,14 @@
     outline: none;
     position: relative;
 }
-#btn{
+
+#btn {
     top: 0;
     left: 0;
-    position:absolute;
+    position: absolute;
     width: 110px;
     height: 100%;
-    background: linear-gradient(to right,#46d381,#2c92e6);
+    background: linear-gradient(to right, #46d381, #2c92e6);
     border-radius: 30px;
     transition: .5s;
 }
