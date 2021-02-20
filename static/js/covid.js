@@ -1,5 +1,4 @@
 async function get_th() {
-    var data;
     var Confirmed, Recovered, Hospitalized, Deaths;
     var NewConfirmed, NewRecovered, NewHospitalized, NewDeaths;
     var UpdateDate;
