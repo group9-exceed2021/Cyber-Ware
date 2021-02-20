@@ -6,20 +6,20 @@ import requests
 import urllib, json
 from os import path, environ
 from os.path import join, dirname
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 import datetime, pytz
 import math
 
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+# dotenv_path = join(dirname(__file__), '.env')
+# load_dotenv(dotenv_path)
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = environ.get("MONGO_URL")
-app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
+app.config['MONGO_URI'] = 'mongodb://exceed_group09:fvgwpw72@158.108.182.0:2255/exceed_group09'
+app.config['SECRET_KEY'] = 'secret-key-goes-here'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 mongo = PyMongo(app)
 myTemp = mongo.db.temp
 myUser = mongo.db.user
