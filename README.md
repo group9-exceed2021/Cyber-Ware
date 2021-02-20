@@ -20,6 +20,7 @@ source auth/bin/activate
 ```
 
 # run project to server
+
 ```
 >>> .\auth\Scripts\activate
 >>> flask run
