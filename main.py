@@ -11,6 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 import datetime, pytz
+
 import math
 
 # dotenv_path = join(dirname(__file__), '.env')
@@ -42,7 +43,7 @@ def login_post():
     flit = {'email': email}
     data = myUser.find_one(flit)
     if not data:
-        return {"result": "check your login details and try again"}
+        return {"result": "Check your login details and try again."}
     if not check_password_hash(data["password"], password):
         return {"result": "Wrong password"}
     return {"result": "login successfully"}
@@ -165,7 +166,7 @@ def signup_post():
         "daily_temp": [],
         "daily_avg": []
     })
-    return {"result": "login successful"}
+    return {"result": "signup successful"}
 
 
 @app.route('/get_th_stat', methods=['GET'])

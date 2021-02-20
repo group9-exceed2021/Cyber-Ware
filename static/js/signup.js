@@ -16,9 +16,10 @@ function clearInputError(inputElement) {
     inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
 }
 
-function signupData(email, firstname, surname, password, job, bloodType, sn) {
-    let result;
-    fetch('http://158.108.182.10:3000/signup_post', {
+let result;
+
+async function signupData(email, firstname, surname, password, job, bloodType, sn) {
+    await fetch('http://158.108.182.10:3000/signup_post', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -36,7 +37,19 @@ function signupData(email, firstname, surname, password, job, bloodType, sn) {
             result = value.result
         })
         .catch(reason => console.log("error", reason));
-    return result;
+}
+
+function successfullySignup() {
+    document.getElementById("email").value = "";
+    document.getElementById("firstname").value = "";
+    document.getElementById("surname").value = "";
+    document.getElementById("password1").value = "";
+    document.getElementById("password2").value = "";
+    document.getElementById("blood type").value = "";
+    document.getElementById("jobs").value = "";
+    document.getElementById("cyberWareSN").value = "";
+
+    window.location.href = "../templates/login.html";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -44,6 +57,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const createAccountForm = document.querySelector("#createAccount")
     const accountInfo = document.querySelector("#accountInfo")
     const moreInfo = document.querySelector("#moreInfo")
+
+    createAccountForm.addEventListener("submit", evt => {
+        evt.preventDefault();
+        let email = document.getElementById("email").value;
+        let firstname = document.getElementById("firstname").value;
+        let surname = document.getElementById("surname").value;
+        let password = document.getElementById("password1").value;
+        let bloodType = document.getElementById("blood type").value;
+        let job = document.getElementById("jobs").value;
+        let sn = document.getElementById("cyberWareSN").value;
+        signupData(email, firstname, surname, password, job, bloodType, sn).then(() => {
+            if (result === "This serial number is not exist!" || result === "This serial number is already signed up!")
+                setInputError(document.getElementById("cyberWareSN"), result);
+            else if (result === "This email is already signed up!")
+                setInputError(document.getElementById("email"), result)
+            else if (result === "signup successful")
+                successfullySignup()
+            result = "";
+        });
+    })
+
+    createAccountForm.addEventListener("submit", evt => {
+        evt.preventDefault()
+    })
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
 
@@ -60,14 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         inputElement.addEventListener("blur", evt => {
-            if (evt.target.id === "username" && evt.target.value.length > 0 && evt.target.value.length < 10) {
-                console.log('inputElement', inputElement);
-                setInputError(inputElement, "Username must be at least 10 characters in length");
-            }
-            if (evt.target.id === "email" && /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(evt.value)) {
-                console.log("inputElement", inputElement);
-                console.log("evt", evt);
+            if (evt.target.id === "email" && !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(evt.target.value))) {
                 setInputError(inputElement, "You have entered an invalid email address!");
+            }
+            let password1 = document.getElementById("password1");
+            let password2 = document.getElementById("password2");
+            if (evt.target.id === "password2" && password1.value !== password2.value) {
+                setInputError(inputElement, "Password does not match")
             }
         });
 
@@ -76,25 +112,4 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     });
 
-    createAccountForm.addEventListener("submit", evt => {
-        evt.preventDefault();
-        let email = document.getElementById("email").value;
-        let firstname = document.getElementById("firstname").value;
-        let surname = document.getElementById("surname").value;
-        let password = document.getElementById("password1").value;
-        let bloodType = document.getElementById("blood type").value;
-        let job = document.getElementById("jobs").value;
-        let sn = document.getElementById("cyberWareSN").value;
-        signupData(email, firstname, surname, password, job, bloodType, sn);
-        document.getElementById("email").value = "";
-        document.getElementById("firstname").value = "";
-        document.getElementById("surname").value = "";
-        document.getElementById("password1").value = "";
-        document.getElementById("password2").value = "";
-        document.getElementById("blood type").value = "";
-        document.getElementById("jobs").value = "";
-        document.getElementById("cyberWareSN").value = "";
-
-        window.location.href = "../templates/login.html";
-    })
 })

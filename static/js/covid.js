@@ -1,7 +1,12 @@
+let requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+};
+
 async function get_th() {
-    var Confirmed, Recovered, Hospitalized, Deaths;
-    var NewConfirmed, NewRecovered, NewHospitalized, NewDeaths;
-    var UpdateDate;
+    let Confirmed, Recovered, Hospitalized, Deaths;
+    let NewConfirmed, NewRecovered, NewHospitalized, NewDeaths;
+    let UpdateDate;
     await fetch("http://158.108.182.10:3000/get_th_stat", requestOptions)
         .then(response => response.json())
         .then(json => {
@@ -27,12 +32,10 @@ async function get_th() {
         .catch(error => console.log('error', error));
 }
 
-var requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-};
 
-get_th()
+get_th().then(r => {
+    return r;
+})
 // var requestOptions = {
 //     method: 'GET',
 //     redirect: 'follow'
