@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Personal Information</title>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    </style>
+</head>
+<body> 
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <a href="../templates/covid.html"><span class="w3-bar-item w3-right">Sign Out</span></a>
+        <span class="w3-bar-item w3-right" id="Firstname"> </span>
+    </div>
+    <div class="w3-main" style="margin-top:43px;">
+        <header class="w3-container" style="padding-top:22px">
+          <h1><b><i>Information</i></b></h1>
+        </header>
+    <div class="w3-panel">
+        <div class="w3-row-padding" style="margin:0 -16px">
+            <div class="w3-twothird">
+                <table class="w3-table w3-striped w3-white">
+                <tr>
+                <td>Firstname</td>
+                <td id="Firstname"><i> </i></td>
+              </tr>
+              <tr>
+                <td>Surname</td>
+                <td id="Surname"><i> </i></td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td id="Email"><i> </i></td>
+              </tr>
+              <tr>
+                <td>BloodType</td>
+                <td id="Blood"><i> </i></td>
+              </tr>
+              <tr>
+                <td>Job</td>
+                <td id="Job"><i> </i></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+    </div>
+    <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+          <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-left"><i class="fa fa-dashboard w3-xxxlarge"></i></div>
+            <div class="w3-right">
+              <h3 id="Temperature"> </h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Temperature</h4>
+          </div>
+        </div>
+    </div>
+    <div id="chartContainer" style="height: 370px; width:60%;">
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script src="../static/js/infoscript.js"></script>
+    </div>
+</body>
+</html>
