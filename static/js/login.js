@@ -6,9 +6,10 @@ function setFormMessage(formElement, type, message) {
     messageElement.classList.add(`form__message--${type}`);
 }
 
-function loginData(email, password) {
-    let result;
-    fetch('http://158.108.182.10:3000/login_post', {
+let result;
+
+async function loginData(email, password) {
+    await fetch('http://158.108.182.10:3000/login_post', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -30,12 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
         evt.preventDefault();
         let email = document.getElementById("email").value
         let password = document.getElementById("password").value
-        loginData(email, password);
-        document.getElementById("email").value = ""
-        document.getElementById("password").value = ""
-
-        // window.location.href = "../templates/covid.html"
-        // setFormMessage(loginForm, "error", "Invalid username/password combination.");
+        loginData(email, password).then(r => {
+            if (result === "Check your login details and try again." || result === "Wrong password")
+                setFormMessage(loginForm, "error", result);
+            else if (result === "login successfully") {
+                setFormMessage(loginForm, "success", result);
+                document.getElementById("email").value = "";
+                document.getElementById("password").value = "";
+                window.location.href = "../templates/covid.html";
+            }
+            result = "";
+        });
     });
 
     // let submitLogin = document.getElementById('submitLogin')
