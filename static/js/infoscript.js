@@ -1,24 +1,34 @@
-let d = 0;
+let imported = document.createElement('script');
+imported.src = 'https://canvasjs.com/assets/script/canvasjs.min.js';
+document.head.appendChild(imported);
+
 function get_info() {
-    var data;
-    var Temperature, Email;
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    let Temperature, Email, Blood, Firstname, d, d2;
     window.onload = function () {
+
         fetch("http://158.108.182.10:3000/get_info?email=a2@gmail.com", requestOptions)
             .then(response => response.json())
             .then(json => {
 
                 Temperature = json.show_temp
                 document.getElementById("Temperature").innerHTML = Temperature
+
                 Email = json.email
                 document.getElementById("Email").innerHTML = Email
+
                 Blood = json.blood_type
                 document.getElementById("Blood").innerHTML = Blood
+
                 Firstname = json.firstname
                 document.getElementById("Firstname").innerHTML = Firstname
                 document.getElementById("Firstname2").innerHTML = Firstname
                 d = json.daily_temp
 
-                //console.log(d)    
+                //console.log(d)
                 // document.getElementsByTagName("h3")
                 // var all = document.getElement
                 Job = json.job
@@ -28,14 +38,23 @@ function get_info() {
                 console.log(d)
 
                 console.log(123)
-                var chart = new CanvasJS.Chart("chartContainer",
+                let tmp = [];
+                for (let i = 0; i < d.length; i++) {
+                    console.log(i)
+                    tmp.push({
+                        x: new Date(d[i]["year"], d[i]["month"], d[i]["day"], d[i]["hour"], d[i]["minute"], d[i]["sec"]),
+                        y: d[i]["temp"]
+                    })
+                }
+
+                let chart1 = new CanvasJS.Chart("chartContainer",
                     {
                         title: {
-                            text: "Converting in Local Time"
+                            text: "Temperature per 2 hours"
                         },
 
                         axisX: {
-                            title: "time",
+                            title: "Time",
                             gridThickness: 2,
                             interval: 2,
                             intervalType: "hour",
@@ -43,29 +62,23 @@ function get_info() {
                             labelAngle: -20
                         },
                         axisY: {
-                            title: "distance"
+                            title: "Temperature"
                         },
                         data: [
                             {
                                 type: "line",
-                                dataPoints: []
+                                dataPoints: tmp
                             }
                         ]
-                  console.log(chart)
-                  chart.render();
-                    }
+                    });
+                chart1.render();
+            })
 
+            .catch(error => console.log('error', error));
+    }
+}
 
-                        .catch(error => console.log('error', error));
-            }
-            
-            var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-    });
-
-    get_info();
+get_info();
 // console.log(d)
 /*
 window.onload = function () {
@@ -115,4 +128,4 @@ window.onload = function () {
         updateChart()
     }, updateInterval);
 
-}
+}*/
