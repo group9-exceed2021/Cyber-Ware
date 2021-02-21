@@ -2,7 +2,7 @@ async function get_th() {
     var Confirmed, Recovered, Hospitalized, Deaths;
     var NewConfirmed, NewRecovered, NewHospitalized, NewDeaths;
     var UpdateDate;
-    await fetch("http://185844a92011.ngrok.io/get_th_stat", requestOptions)
+    await fetch("http://158.108.182.10:3000/get_th_stat", requestOptions)
         .then(response => response.json())
         .then(json => {
             Confirmed = json.Confirmed
