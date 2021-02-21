@@ -1,13 +1,12 @@
-from flask import Flask, request, jsonify
-from flask_pymongo import PyMongo
-from flask_cors import CORS, cross_origin
-import requests
-from os import path, environ
-from os.path import join, dirname
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+import datetime
 
-import datetime, pytz
+import pytz
+import requests
+from flask import Flask
+from flask import request
+from flask_cors import CORS, cross_origin
+from flask_pymongo import PyMongo
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://exceed_group09:fvgwpw72@158.108.182.0:2255/exceed_group09'
@@ -19,10 +18,11 @@ myUser = mongo.db.user
 mySn = mongo.db.serial_number
 cors = CORS(app, resources={r"/": {"origins": "*"}})
 
+
 @app.route('/')
 @cross_origin()
 def index():
-    return {"notthing": "not"}
+    return {"nothing": "not"}
 
 
 @app.route('/login_post', methods=['POST'])
@@ -36,6 +36,7 @@ def login_post():
     if not check_password_hash(data["password"], datalog['password']):
         return {"result": "Wrong password"}
     return {"result": "login successfully"}
+
 
 @app.route('/get_info', methods=["GET"])
 @cross_origin()
@@ -62,6 +63,7 @@ def get_info():
         "avg": data_temp['daily_avg']
     }
 
+
 @app.route('/new_temp', methods=['POST'])
 @cross_origin()
 def new_temp():
@@ -78,11 +80,10 @@ def new_temp():
     mi = datetime.datetime.now(tz).minute
     sec = datetime.datetime.now(tz).second
 
-
     data = myTemp.find_one({'sn': sn})
     if len(data['daily_temp']) != 0:
-        thelast = data['daily_temp'][len(data['daily_temp']) - 1]
-        if thelast['day'] != d:
+        the_last = data['daily_temp'][len(data['daily_temp']) - 1]
+        if the_last['day'] != d:
             all_temp = 0
             all_hr = 0
             daily = myTemp.find_one({'sn': sn})
@@ -92,7 +93,8 @@ def new_temp():
             avg = 0 if all_hr == 0 else all_temp / all_hr
             if len(daily['daily_avg']) == 14:
                 daily['daily_avg'].pop(0)
-            daily['daily_avg'].append({"temp_avg": avg, "year": thelast["year"], "month": thelast["month"], "day": thelast['day']})
+            daily['daily_avg'].append(
+                {"temp_avg": avg, "year": the_last["year"], "month": the_last["month"], "day": the_last['day']})
             daily['daily_temp'] = []
             myTemp.replace_one(
                 myTemp.find_one({'sn': sn}),
@@ -105,6 +107,7 @@ def new_temp():
         data
     )
     return {"result": "add new temp done"}
+
 
 @app.route('/test', methods=['GET'])
 @cross_origin()
@@ -122,50 +125,51 @@ def test():
 @app.route('/signup_post', methods=['POST'])
 @cross_origin()
 def signup_post():
-    dataJson = request.json
-    dataSN = mySn.find_one({'sn': dataJson['sn']})
+    data_json = request.json
+    data_sn = mySn.find_one({'sn': data_json['sn']})
 
-    if not dataSN:
+    if not data_sn:
         return {"result": 'This serial number is not exist!'}
-    if dataSN['signed_up'] == 1:
+    if data_sn['signed_up'] == 1:
         return {"result": 'This serial number is already signed up!'}
 
-    dataEmail = myUser.find_one({'email': dataJson['email']})
+    data_email = myUser.find_one({'email': data_json['email']})
 
-    if dataEmail:
+    if data_email:
         return {"result": 'This email is already signed up!'}
 
     data = {
-        "sn": dataJson['sn'],
-        "email": dataJson['email'],
-        "firstname": dataJson['firstname'],
-        "surname":  dataJson["surname"],
-        "password": generate_password_hash(dataJson['password'], method='sha256'),
-        "blood_type": dataJson['bloodType'],
-        "job": dataJson['job']
+        "sn": data_json['sn'],
+        "email": data_json['email'],
+        "firstname": data_json['firstname'],
+        "surname": data_json["surname"],
+        "password": generate_password_hash(data_json['password'], method='sha256'),
+        "blood_type": data_json['bloodType'],
+        "job": data_json['job']
     }
 
-    update = {"$set": {"signed_up" : 1}}
-    mySn.update_one({'sn': dataJson['sn']},update)
+    update = {"$set": {"signed_up": 1}}
+    mySn.update_one({'sn': data_json['sn']}, update)
 
     myUser.insert_one(data)
     myTemp.insert_one({
-        "sn": dataJson["sn"],
+        "sn": data_json["sn"],
         "daily_temp": [],
         "daily_avg": []
     })
     return {"result": "signup successful"}
+
 
 @app.route('/get_th_stat', methods=['GET'])
 @cross_origin()
 def get_th_stat():
     uri = "https://covid19.th-stat.com/api/open/today"
     try:
-        uResponse = requests.get(uri)
+        u_response = requests.get(uri)
     except requests.ConnectionError:
         return "Connection Error"
-    Jresponse = uResponse.json()
-    return Jresponse
+    j_response = u_response.json()
+    return j_response
 
 
 if __name__ == "__main__":
