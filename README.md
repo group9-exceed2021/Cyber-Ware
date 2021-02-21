@@ -15,11 +15,6 @@ purposes. See deployment for notes on how to deploy the project on a server.
 - pipenv
 - mongoDB [optional]
 
-Note:
-
-- If you use Python3.8, it'll occur the error.  
-  Read here how to fix: [issues #84](https://github.com/EveGroup/EveHolder/issues/84).
-
 ### Setup for Cyber Ware Web application
 
 Download the code from git using `git clone`. Do the following step to use this application.
