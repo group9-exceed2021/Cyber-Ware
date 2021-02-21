@@ -1,6 +1,6 @@
 import datetime
-
 import pytz
+
 import requests
 from flask import Flask
 from flask import request
@@ -47,7 +47,10 @@ def get_info():
     sn = data["sn"]
     filt2 = {"sn": sn}
     data_temp = myTemp.find_one(filt2)
-    print(data_temp)
+    if len(data_temp["daily_temp"]) == 0:
+        show = 'nothing'
+    else:
+        show = data_temp["daily_temp"][len(data_temp["daily_temp"]) - 1]['temp']
     return {
         "sn": data['sn'],
         "email": data['email'],
@@ -55,7 +58,7 @@ def get_info():
         "surname": data['surname'],
         "blood_type": data['blood_type'],
         "job": data['job'],
-        "show_temp": data_temp["daily_temp"][len(data_temp["daily_temp"]) - 1]['temp'],
+        "show_temp": show,
         "daily_temp": data_temp['daily_temp'],
         "avg": data_temp['daily_avg']
     }
