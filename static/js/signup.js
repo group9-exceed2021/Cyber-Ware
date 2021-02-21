@@ -70,9 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
         signupData(email, firstname, surname, password, job, bloodType, sn).then(() => {
             if (result === "This serial number is not exist!" || result === "This serial number is already signed up!")
                 setInputError(document.getElementById("cyberWareSN"), result);
-            else if (result === "This email is already signed up!")
+            else if (result === "This email is already signed up!") {
+                accountInfo.classList.remove("form--hidden");
+                moreInfo.classList.add("form--hidden");
                 setInputError(document.getElementById("email"), result)
-            else if (result === "signup successful")
+            } else if (result === "signup successful")
                 successfullySignup()
             result = "";
         });
