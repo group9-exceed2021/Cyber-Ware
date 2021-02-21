@@ -47,10 +47,7 @@ def get_info():
     sn = data["sn"]
     filt2 = {"sn": sn}
     data_temp = myTemp.find_one(filt2)
-    if len(data_temp["daily_temp"]) == 0:
-        show = 'nothing'
-    else:
-        show = data_temp["daily_temp"][len(data_temp["daily_temp"]) - 1]['temp']
+    print(data_temp)
     return {
         "sn": data['sn'],
         "email": data['email'],
@@ -58,7 +55,7 @@ def get_info():
         "surname": data['surname'],
         "blood_type": data['blood_type'],
         "job": data['job'],
-        "show_temp": show,
+        "show_temp": data_temp["daily_temp"][len(data_temp["daily_temp"]) - 1]['temp'],
         "daily_temp": data_temp['daily_temp'],
         "avg": data_temp['daily_avg']
     }
