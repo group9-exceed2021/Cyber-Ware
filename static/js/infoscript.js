@@ -1,32 +1,124 @@
-async function get_info() {
-    var data;
-    var Temperature, Email;
-    await fetch("http://185844a92011.ngrok.io/get_info?email=a2@gmail.com", requestOptions)
-        .then(response => response.json())
-        .then(json => {
-            Temperature = json.show_temp
-            document.getElementById("Temperature").innerHTML = Temperature
-            Email = json.email
-            document.getElementById("Email").innerHTML = Email
-            Blood = json.blood_type
-            document.getElementById("Blood").innerHTML = Blood
-            Firstname = json.firstname
-            document.getElementById("Firstname").innerHTML = Firstname
-            Job = json.job
-            document.getElementById("Job").innerHTML = Job
-            Surname = json.surname
-            document.getElementById("Surname").innerHTML = Surname
-        })
-        .catch(error => console.log('error', error));
+let imported = document.createElement('script');
+imported.src = 'https://canvasjs.com/assets/script/canvasjs.min.js';
+document.head.appendChild(imported);
+
+function get_info() {
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    let Temperature, Email, Blood, Firstname, d, d2;
+    window.onload = function () {
+
+        fetch("http://158.108.182.10:3000/get_info?email=a2@gmail.com", requestOptions)
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+                Temperature = json.show_temp
+                document.getElementById("Temperature").innerHTML = Temperature
+
+                Email = json.email
+                document.getElementById("Email").innerHTML = Email
+
+                Blood = json.blood_type
+                document.getElementById("Blood").innerHTML = Blood
+
+                Firstname = json.firstname
+                document.getElementById("Firstname").innerHTML = Firstname
+                document.getElementById("Firstname2").innerHTML = Firstname
+                d = json.daily_temp
+                d2 = json.avg
+
+                console.log(d)
+                console.log(d2)
+                // document.getElementsByTagName("h3")
+                // var all = document.getElement
+                Job = json.job
+                document.getElementById("Job").innerHTML = Job
+                Surname = json.surname
+                document.getElementById("Surname").innerHTML = Surname
+                //console.log(d)
+
+                console.log(123)
+                let tmp = [];
+                for (let i = 0; i < d.length; i++) {
+                    console.log(i)
+                    tmp.push({
+                        x: new Date(d[i]["year"], d[i]["month"], d[i]["day"], d[i]["hour"], d[i]["minute"], d[i]["sec"]),
+                        y: d[i]["temp"]
+                    })
+                }
+
+                let tmp2 = [];
+                for (let j= 0; j < d2.length; j++) {
+                    console.log(j)
+                    tmp2.push ({
+                        x: new Date(d2[j]["year"], d2[j]["month"], d2[j]["day"]), 
+                        y: d2[j]["temp_avg"]
+                    })
+                }
+
+                let chart1 = new CanvasJS.Chart("chartContainer",
+                    {
+                        title: {
+                            text: "Temperature per 2 hours"
+                        },
+
+                        axisX: {
+                            title: "Time",
+                            gridThickness: 2,
+                            interval: 2,
+                            intervalType: "hour",
+                            valueFormatString: "hh TT K",
+                            labelAngle: -20
+                        },
+                        axisY: {
+                            title: "Temperature"
+                        },
+                        data: [
+                            {
+                                type: "line",
+                                dataPoints: tmp
+                            }
+                        ]
+                    });
+                    let chart2 = new CanvasJS.Chart("chartContainer2",
+                    {
+                        title: {
+                            text: "Daily Average Temperature"
+                        },
+
+                        axisX: {
+                            title: "Date",
+                            gridThickness: 2,
+                            interval: 2,
+                            intervalType: "day",
+                            valueFormatString: "hh TT K",
+                            labelAngle: -20
+                        },
+                        axisY: {
+                            title: "Average Temperature"
+                        },
+                        data: [
+                            {
+                                type: "line",
+                                dataPoints: tmp2
+                            }
+                        ]
+                    });
+
+
+                chart1.render();
+                chart2.render();
+            })
+
+            .catch(error => console.log('error', error));
+    }
 }
 
-var requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-};
-
-get_info()
-
+get_info();
+// console.log(d)
+/*
 window.onload = function () {
 
     var data;
@@ -74,4 +166,4 @@ window.onload = function () {
         updateChart()
     }, updateInterval);
 
-}
+}*/

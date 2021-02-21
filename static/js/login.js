@@ -6,22 +6,51 @@ function setFormMessage(formElement, type, message) {
     messageElement.classList.add(`form__message--${type}`);
 }
 
+let result;
+
+async function loginData(email, password) {
+    await fetch('http://158.108.182.10:3000/login_post', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    }).then((response) => response.json())
+        .then(value => {
+            result = value.result
+            console.log("result", result)
+        })
+        .catch(reason => console.log("error", reason));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.querySelector("#login");
 
     loginForm.addEventListener("submit", evt => {
         evt.preventDefault();
-
-        setFormMessage(loginForm, "error", "Invalid username/password combination.");
+        let email = document.getElementById("email").value
+        let password = document.getElementById("password").value
+        loginData(email, password).then(r => {
+            if (result === "Check your login details and try again." || result === "Wrong password")
+                setFormMessage(loginForm, "error", result);
+            else if (result === "login successfully") {
+                setFormMessage(loginForm, "success", result);
+                document.getElementById("email").value = "";
+                document.getElementById("password").value = "";
+                window.location.href = "../templates/covid.html";
+            }
+            result = "";
+        });
     });
 
-    let submitLogin = document.getElementById('submitLogin')
-    let url = new URL('https://')
-    let params = new URLSearchParams(url.search.slice(1))
-
-    submitLogin.onclick = function (click) {
-        params.append("email", "email from form")
-    }
-
-
+    // let submitLogin = document.getElementById('submitLogin')
+    // let url = new URL('https://')
+    // let params = new URLSearchParams(url.search.slice(1))
+    //
+    // submitLogin.onclick = function (click) {
+    //     params.append("email", "email from form")
+    // }
+    //
+    // loginForm
 })

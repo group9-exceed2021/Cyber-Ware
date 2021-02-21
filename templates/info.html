@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Personal Information</title>
+<title>User Info - Cyber Ware</title>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/infostyle.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,37 +14,45 @@
             font-family: "Raleway", sans-serif
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 </head>
 <body>
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+<div class="w3-bar w3-top w3-green w3-large" style="z-index:4">
     <a href="../templates/covid.html"><span class="w3-bar-item w3-right">Sign Out</span></a>
-    <span class="w3-bar-item w3-right" id="Firstname"> </span>
+    <a href="../templates/info.html"><span class="w3-bar-item w3-right" id="Firstname2"> </span></a>
+
 </div>
 <div class="w3-main" style="margin-top:43px;">
     <header class="w3-container" style="padding-top:22px">
-        <h1><b><i>Information</i></b></h1>
+        <div class="w3-left"><i class="fa fa-address-book w3-xxxlarge"></i></div>
+        <h1><b>Information</b></h1>
     </header>
     <div class="w3-panel">
         <div class="w3-row-padding" style="margin:0 -16px">
             <div class="w3-twothird">
                 <table class="w3-table w3-striped w3-white">
                     <tr>
+                        <td><i class="fa fa-user"></i></td>
                         <td>Firstname</td>
                         <td id="Firstname"><i> </i></td>
                     </tr>
                     <tr>
+                        <td><i class="fa fa-users"></i></td>
                         <td>Surname</td>
                         <td id="Surname"><i> </i></td>
                     </tr>
                     <tr>
+                        <td><i class="fa fa-envelope"></i></td>
                         <td>Email</td>
                         <td id="Email"><i> </i></td>
                     </tr>
                     <tr>
+                        <td><i class="fa fa-tint"></i></td>
                         <td>BloodType</td>
                         <td id="Blood"><i> </i></td>
                     </tr>
                     <tr>
+                        <td><i class="fa fa-user-secret"></i></td>
                         <td>Job</td>
                         <td id="Job"><i> </i></td>
                     </tr>
@@ -54,7 +63,7 @@
     <div class="w3-row-padding w3-margin-bottom">
         <div class="w3-quarter">
             <div class="w3-container w3-red w3-padding-16">
-                <div class="w3-left"><i class="fa fa-dashboard w3-xxxlarge"></i></div>
+                <div class="w3-left"><i class="fa fa-thermometer-2 w3-xxxlarge"></i></div>
                 <div class="w3-right">
                     <h3 id="Temperature"></h3>
                 </div>
@@ -63,9 +72,12 @@
             </div>
         </div>
     </div>
-    <div id="chartContainer" style="height: 370px; width:60%;">
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="../static/js/infoscript.js"></script>
-    </div>
+    <div id="chartContainer" style="height: 370px; width:60%; border: 1px solid black;"></div>
+    <div id="chartContainer2" style="height: 370px; width:60%; border: 1px solid black;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="../static/js/infoscript.js"></script>
+
+</div>
+
 </body>
 </html>

@@ -1,5 +1,5 @@
 import re
-from flask import Flask, request,jsonify
+from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS, cross_origin
 import requests
@@ -11,6 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 import datetime, pytz
+
 import math
 
 # dotenv_path = join(dirname(__file__), '.env')
@@ -26,6 +27,7 @@ myUser = mongo.db.user
 mySn = mongo.db.serial_number
 cors = CORS(app, resources={r"/": {"origins": "*"}})
 
+
 # render is not allowed
 @app.route('/')
 @cross_origin()
@@ -38,32 +40,25 @@ def index():
 def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
-    flit = {'email' : email}
+    flit = {'email': email}
     data = myUser.find_one(flit)
     if not data:
-        return {"result" : "check your login details and try again"}
-    if not check_password_hash(data["password"],password):
-        return {"result" : "Wrong password"}
-    return {"result" : "login successfully"}
+        return {"result": "Check your login details and try again."}
+    if not check_password_hash(data["password"], password):
+        return {"result": "Wrong password"}
+    return {"result": "login successfully"}
 
 
-@app.route('/get_info',methods = ["GET"])
+@app.route('/get_info', methods=["GET"])
 @cross_origin()
 def get_info():
     email = request.args.get('email')
-    flit = {'email' : email}
+    flit = {'email': email}
     data = myUser.find_one(flit)
     sn = data["sn"]
     filt2 = {"sn": sn}
     data_temp = myTemp.find_one(filt2)
-    # datatest = {
-    #     "sn": data['sn'],
-    #     "email": data['email'],
-    #     "firstname": data['firstname'],
-    #     "surname": data['surname'],
-    #     "blood_type": data['blood_type'],
-    #     "job": data['job']
-    # }
+    print(data_temp)
     return {
         "sn": data['sn'],
         "email": data['email'],
@@ -71,11 +66,12 @@ def get_info():
         "surname": data['surname'],
         "blood_type": data['blood_type'],
         "job": data['job'],
-        "show_temp" : data_temp["daily_temp"][len(data_temp["daily_temp"])-1]['temp'],
-        "daily_temp" : data_temp['daily_temp'],
+        "show_temp": data_temp["daily_temp"][len(data_temp["daily_temp"]) - 1]['temp'],
+        "daily_temp": data_temp['daily_temp'],
         "avg": data_temp['daily_avg']
     }
     # return {"fdd": "ghcdg"}
+
 
 @app.route('/new_temp', methods=['POST'])
 @cross_origin()
@@ -92,16 +88,16 @@ def new_temp():
 
     data = myTemp.find_one({'sn': sn})
     if len(data['daily_temp']) != 0:
-        thelast = data['daily_temp'][len(data['daily_temp'])-1]
+        thelast = data['daily_temp'][len(data['daily_temp']) - 1]
         if thelast['day'] != d:
             all_temp = 0
             all_hr = 0
             daily = myTemp.find_one({'sn': sn})
-            tim = str(thelast["day"])+"-"+str(thelast["month"])
+            tim = str(thelast["day"]) + "-" + str(thelast["month"])
             for ele in daily['daily_temp']:
                 all_temp += ele['temp']
                 all_hr += 1
-            avg = 0 if all_hr==0 else all_temp/all_hr
+            avg = 0 if all_hr == 0 else all_temp / all_hr
             print(avg)
             if len(daily['daily_avg']) == 14:
                 daily['daily_avg'].pop(0)
@@ -112,7 +108,7 @@ def new_temp():
                 daily
             )
     data = myTemp.find_one({'sn': sn})
-    data['daily_temp'].append({"temp": temp, "month" : m, "day": d, "hour": h})
+    data['daily_temp'].append({"temp": temp, "month": m, "day": d, "hour": h})
     myTemp.replace_one(
         myTemp.find_one({'sn': sn}),
         data
@@ -144,16 +140,16 @@ def signup_post():
     job = request.form.get('job')
 
     dataSN = mySn.find_one({'sn': sn})
-    
-    if not dataSN:
-        return {"result" : 'This serial number is not exist!'}
-    if dataSN['signed_up']:
-        return {"result" : 'This serial number is already signed up!'}
 
-    dataEmail = myUser.find_one({'email' : email})
+    if not dataSN:
+        return {"result": 'This serial number is not exist!'}
+    if dataSN['signed_up']:
+        return {"result": 'This serial number is already signed up!'}
+
+    dataEmail = myUser.find_one({'email': email})
 
     if dataEmail:
-        return {"result" : 'This email is already signed up!'}
+        return {"result": 'This email is already signed up!'}
 
     data = {
         "sn": sn,
@@ -170,7 +166,8 @@ def signup_post():
         "daily_temp": [],
         "daily_avg": []
     })
-    return {"result" : "login successful"}
+    return {"result": "signup successful"}
+
 
 @app.route('/get_th_stat', methods=['GET'])
 @cross_origin()
@@ -179,9 +176,10 @@ def get_th_stat():
     try:
         uResponse = requests.get(uri)
     except requests.ConnectionError:
-       return "Connection Error"  
+        return "Connection Error"
     Jresponse = uResponse.json()
     return Jresponse
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='3000', debug=True)
