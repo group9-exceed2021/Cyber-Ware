@@ -1,0 +1,19 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Quicksand", sans-serif
+}
+
+.w3-bar {
+    background: #009579;
+    color: white;
+}
+
+.w3-container {
+    border-radius: .5rem;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+}

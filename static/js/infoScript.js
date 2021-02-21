@@ -1,16 +1,19 @@
 let imported = document.createElement('script');
 imported.src = 'https://canvasjs.com/assets/script/canvasjs.min.js';
 document.head.appendChild(imported);
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const email = urlParams.get('email')
 
 function get_info() {
     let requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-    let Temperature, Email, Blood, Firstname, d, d2;
+    let Temperature, Email, Blood, Firstname, d, d2, Job, Surname;
     window.onload = function () {
 
-        fetch("http://158.108.182.10:3000/get_info?email=a2@gmail.com", requestOptions)
+        fetch("http://158.108.182.10:3000/get_info?email=" + email, requestOptions)
             .then(response => response.json())
             .then(json => {
                 console.log(json)
@@ -50,10 +53,10 @@ function get_info() {
                 }
 
                 let tmp2 = [];
-                for (let j= 0; j < d2.length; j++) {
+                for (let j = 0; j < d2.length; j++) {
                     console.log(j)
-                    tmp2.push ({
-                        x: new Date(d2[j]["year"], d2[j]["month"], d2[j]["day"]), 
+                    tmp2.push({
+                        x: new Date(d2[j]["year"], d2[j]["month"], d2[j]["day"]),
                         y: d2[j]["temp_avg"]
                     })
                 }
@@ -82,7 +85,7 @@ function get_info() {
                             }
                         ]
                     });
-                    let chart2 = new CanvasJS.Chart("chartContainer2",
+                let chart2 = new CanvasJS.Chart("chartContainer2",
                     {
                         title: {
                             text: "Daily Average Temperature"

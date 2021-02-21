@@ -16,7 +16,8 @@ async function loginData(email, password) {
             email: email,
             password: password
         })
-    }).then((response) => response.json())
+    })
+        .then((response) => response.json())
         .then(value => {
             result = value.result
             console.log("result", result)
@@ -34,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
         loginData(email, password).then(r => {
             if (result === "Check your login details and try again." || result === "Wrong password")
                 setFormMessage(loginForm, "error", result);
-            else if (result === "login successfully") {
+            if (result === "login successfully") {
                 setFormMessage(loginForm, "success", result);
-                document.getElementById("email").value = "";
                 document.getElementById("password").value = "";
-                window.location.href = "../templates/covid.html";
+                window.location.href = "../templates/info.html?email=" + email;
+                document.getElementById("email").value = "";
             }
             result = "";
         });
