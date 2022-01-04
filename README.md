@@ -3,6 +3,9 @@
 This cyber ware is for make you safer when ware mask. This will help you know your temperature in 14 days and also
 detect the person that come near you more than 1 meters.
 
+Presentation:
+https://youtu.be/h7nAJFsMnHo
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing
