@@ -83,6 +83,6 @@ Download the code from git using `git clone`. Do the following step to use this 
 | 6210546447 |   Sirapop    |    Kunjiak    | Frontend |     [bemyXmas](https://github.com/bemyXmas)     |
 | 6210503721 |   Phanphut   | Saengkitamorn | Frontend |     [Phanphut](https://github.com/Phanphut)     |
 | 6210503870 |   Sirapop    |   Chayajet    | Hardware |   [SirapopPCC](https://github.com/SirapopPCC)   |
-| 6210546013 |  Vichisorn   |  Wejsupakul   | Frontend |    [james31366](https://github.com/bemyXmas)    |
+| 6210546013 |  Vichisorn   |  Wejsupakul   | Frontend |    [james31366](https://github.com/james31366)    |
 | 6210545734 |    Puvana    |  Swatvanith   | Backend  |     [Noboomta](https://github.com/Noboomta)     |
 
